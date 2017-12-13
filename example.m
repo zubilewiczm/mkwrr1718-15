@@ -48,3 +48,17 @@ Z = 1/(2*pi*0.001)*exp(-(X.^2+Y.^2)/0.002);
 surf(X,Y,Z);
 alpha(0.7);
 hold off;
+
+%% Sampling
+pdf  = @(x,y) x.*y.^2./5;
+area = [0,1;-1,1];
+n    = 10000;
+samp = sample_discrete(pdf,n,area,0.02); % h
+samp2 = sample_rejection(pdf,n,area,0.5); % top
+xedge = 0:0.1:1;
+yedge = -1:0.2:1;
+figure(8);
+subplot(2,2,1); scatter(samp(1,:), samp(2,:), 1);
+subplot(2,2,2); scatter(samp2(1,:), samp(2,:),1);
+subplot(2,2,3); histogram2(samp(1,:), samp(2,:), xedge, yedge);
+subplot(2,2,4); histogram2(samp2(1,:), samp2(2,:), xedge, yedge);
