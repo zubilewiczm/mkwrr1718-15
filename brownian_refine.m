@@ -1,5 +1,5 @@
 function [ xs2, ts2 ] = brownian_refine( xs, ts, i, r, sigma )
-%BROWNIAN_REFINE Performs refinement of Brownian trajectory between two
+%BROWNIAN_REFINE Performs refinement of a Brownian trajectory between two
 % time coordinates using the Brownian bridge.
 %   Args:
 %     xs        Positions of particle in time `ts`.
