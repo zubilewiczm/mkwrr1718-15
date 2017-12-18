@@ -21,6 +21,7 @@ plot(x4(1,:),x4(2,:));
 daspect([1,1,1]);
 
 %% 1D Refinement
+[x2,t2] = brownian_simple(0,1,0.03);
 [x5,t5] = brownian_refine(x2,t2,15,100);
 figure(5);
 plot(t5,x5,t2,x2);
@@ -32,6 +33,7 @@ figure(6);
 plot(t6,x6,t2,x2);
 
 %% Distribution
+x1 = brownian_simple([0;0],1,0.001);
 d1 = diff(x1,1,2);
 figure(7);
 subplot(1,2,1);
@@ -62,3 +64,34 @@ subplot(2,2,1); scatter(samp(1,:), samp(2,:), 1);
 subplot(2,2,2); scatter(samp2(1,:), samp(2,:),1);
 subplot(2,2,3); histogram2(samp(1,:), samp(2,:), xedge, yedge);
 subplot(2,2,4); histogram2(samp2(1,:), samp2(2,:), xedge, yedge);
+
+%% Solution of diffusion equation -- no boundary
+pdf  = @(x,y) x.*y.^2./5;
+area = [0,1;-1,1];
+n    = 100000;
+u0 = struct('fun', pdf, 'supp', area);
+T  = 1;
+bb = [-4,4;-4,4];
+[u,x,y,t] = solve_st_nobd(u0,T,bb,0.1,0.01,n);
+anim_pdf(u,x,y,t,[0,0.05],10);
+
+%% Solution of diffusion equation -- Dirichlet boundary
+pdf  = @(x,y) x.*y.^2./5;
+area = [0,1;-1,1];
+n    = 100000;
+u0 = struct('fun', pdf, 'supp', area);
+T  = 1;
+rg = @(x) all(abs(x)<1.5); % square [-1.5,1.5]^2
+bb = [-2,2;-2,2];
+[u,x,y,t] = solve_st_dirichlet(u0,rg,T,bb,0.1,0.01,n);
+anim_pdf(u,x,y,t,[0,0.05],10);
+
+%% Solution of diffusion equation -- Neumann boundary
+pdf  = @(x,y) x.*y.^2./5;
+area = [0,1;-1,1];
+n    = 100000;
+u0 = struct('fun', pdf, 'supp', area);
+T  = 1;
+bb = [-1,1;-1,1];
+[u,x,y,t] = solve_st_neumann(u0,T,bb,0.1,0.01,n);
+anim_pdf(u,x,y,t,[0,0.05],10);
