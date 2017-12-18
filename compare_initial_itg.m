@@ -6,14 +6,18 @@ function [ itg, x, y ] = compare_initial_itg( pdf, area, h )
 %                 density function of a random variable.
 %     area      2x2 matrix representing sampling area as a cartesian
 %                 product of its rows treated as closed intervals.
-%     h         Positive scalar -- mesh size.
+%     h         Positive scalar or 2-element vector -- mesh size.
 %
 %   Returns:
 %     itg       Integrals over cells of a mesh.
 %     x,y       Grid edges.
 
-x = area(1,1):h:area(1,2);
-y = area(2,1):h:area(2,2);
+if isscalar(h)
+    h = [h,h];
+end
+
+x = area(1,1):h(1):area(1,2);
+y = area(2,1):h(2):area(2,2);
 [X,Y] = ndgrid(x,y);
 itg = arrayfun(@(x1,x2,y1,y2) integral2(pdf, x1,x2, y1,y2),...
     X(1:end-1,1:end-1), X(2:end,1:end-1),...
