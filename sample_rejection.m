@@ -14,6 +14,14 @@ function [ samp ] = sample_rejection( pdf, n, area, top )
 %   Returns:
 %     samp      Vector of n samples drawn from given distribution.
 
+if nargin < 4
+    res = 1000;
+    x = linspace(area(1,1), area(1,2), res);
+    y = linspace(area(2,1), area(2,2), res);
+    [X,Y] = ndgrid(x,y);
+    top = max(reshape(pdf(X,Y),1,[])) .* 1.25;
+end
+
 draw = 2.^16;
 
 d     = size(area,1);
