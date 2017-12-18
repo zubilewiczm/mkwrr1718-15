@@ -1,5 +1,5 @@
 function [ xs, ts ] = brownian_simple( x0, T, h, sigma )
-%BROWNIAN_SIMPLE_1D Generate a trajectory of the Wiener process.
+%BROWNIAN_SIMPLE Generate a trajectory of the Wiener process.
 %   Args:
 %     x0        Starting point, represented as a column vector of its 
 %                 coordinates. Its length determines the dimension

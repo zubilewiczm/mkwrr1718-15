@@ -8,7 +8,7 @@ function [ u, x, y, t, P, ep, et ] ...
 %                   .supp   Support of the function.
 %                   .m      (opional) Maximal value of the function.
 %               or a function handle corresponding to u0.fun above.
-%     bdr       Boolean function returning 1 if a point lies outside
+%     bdr       Boolean function returning 1 if a point lies inside
 %                 the region.
 %     T         Length of time interval.
 %     area      2x2 matrix representing solution bounding box
