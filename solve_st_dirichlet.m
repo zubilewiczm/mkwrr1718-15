@@ -11,8 +11,9 @@ function [ u, x, y, t, P, ep, et ] ...
 %     bdr       Boolean function returning 1 if a point lies outside
 %                 the region.
 %     T         Length of time interval.
-%     area      2x2 matrix representing sampling area as a cartesian
-%                 product of its rows treated as closed intervals.
+%     area      2x2 matrix representing solution bounding box
+%                 as a cartesian product of its rows treated as closed
+%                 intervals.
 %     h         Spatial step size, represented as a 2-element vector or
 %                 a scalar.
 %     k         Temporal step size.

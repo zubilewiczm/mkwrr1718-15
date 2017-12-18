@@ -7,8 +7,9 @@ function [ u, x, y, t, P ] = solve_st_nobd( u0, T, area, h, k, n  )
 %                   .m      (opional) Maximal value of the function.
 %               or a function handle corresponding to u0.fun above.
 %     T         Length of time interval.
-%     area      2x2 matrix representing sampling area as a cartesian
-%                 product of its rows treated as closed intervals.
+%     area      2x2 matrix representing solution bounding box
+%                 as a cartesian product of its rows treated as closed
+%                 intervals.
 %     h         Spatial step size, represented as a 2-element vector or
 %                 a scalar.
 %     k         Temporal step size.
