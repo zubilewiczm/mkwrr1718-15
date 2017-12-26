@@ -42,37 +42,40 @@ u_half = zeros(m,l);
 [X,Y] = ndgrid(x,y);
 u(:,:,1)=u0(X,Y);
 
-a = -k/(4*h.^2).*ones(m-2,1);
-b = (1+k/2*h.^2).*ones(m-2,1);
-c = a;
-A = [0, 1, 0;
-    a, b, c;
-    0, 1, 0];
+a = -k/(2*h.^2);      ax = a.*ones(m-2,1); ay = a.*ones(l-2,1);
+b = 2*(1+k/(2*h.^2)); bx = b.*ones(m-2,1); by = b.*ones(l-2,1);
+c = a;                cx = c.*ones(m-2,1); cy = c.*ones(l-2,1);
+Ax = [0, 1, 0;
+      ax, bx, cx;
+      0, 1, 0];
+Ay = [0, 1, 0;
+      ay, by, cy;
+      0, 1, 0];
 rhsx = zeros(1,m);
 rhsy = zeros(1,l);
 
 for n=1:N-1
-    u_half(1,:) = zeros(1,l);
     for i=2:m-1
         rhsy(1) = 0;
         for j=2:l-1
-            rhsy(j) = u(i,j,n) +...
-                k/(4*h.^2).*(u(i,j+1,n)-2.*u(i,j,n)+u(i,j-1,n));
+            rhsy(j) = 2*u(i,j,n) +...
+                k/(2*h.^2).*(u(i+1,j,n)-2.*u(i,j,n)+u(i-1,j,n));
         end
         rhsy(l) = 0;
-        u_half(i,:) = thomas(A,rhsy);
+        u_half(i,:) = thomas(Ay,rhsy);
     end
+    u_half(1,:) = zeros(1,l);
     u_half(m,:) = zeros(1,l);
     
-    u(:,1,n+1) = zeros(1,m);
     for j=2:l-1
         rhsx(1) = 0;
         for i=2:m-1
-            rhsx(i) = u_half(i,j) ...
-                + k/(4*h.^2).*(u_half(i+1,j)-2.*u_half(i,j)+u_half(i-1,j));
+            rhsx(i) = 2*u_half(i,j) ...
+                + k/(2*h.^2).*(u_half(i,j+1)-2.*u_half(i,j)+u_half(i,j-1));
         end
         rhsx(m) = 0;
-        u(:,j,n+1) = thomas(A,rhsx);
+        u(:,j,n+1) = thomas(Ax,rhsx);
     end
+    u(:,1,n+1) = zeros(1,m);
     u(:,l,n+1) = zeros(1,m);
 end
