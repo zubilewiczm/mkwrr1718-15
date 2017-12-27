@@ -23,14 +23,20 @@ refl = @(x) area(:,2)-abs(mod(x-area(:,1), 2.*da) - da);
 P = zeros(d,n,l);
 for i=1:n
     P(:,i,:) = brownian_simple(P0(:,i),T,k);
-    bds = squeeze(all(area(:,1) < P(:,i,:) & P(:,i,:) < area(:,2),1));
-    while ~all(bds)
-        s = find(~bds,1);
-        v = P(:,i,s);
-        w = refl(v);
-        P(:,i,s:end) = P(:,i,s:end) + (w-v);
-        bds = all(area(:,1) < P(:,i,:) & P(:,i,:) < area(:,2),1);
+end
+
+incr = zeros(d,n);
+for k=1:l
+    tmp = P(:,:,k) + incr;
+    bds = all(area(:,1) < tmp & tmp < area(:,2),1);
+    for s=1:n
+        if ~bds(s)
+            v = tmp(:,s);
+            w = refl(v);
+            incr(:,s) = incr(:,s) + w - v;
+        end
     end
+    P(:,:,k) = P(:,:,k) + incr;
 end
 
 end
