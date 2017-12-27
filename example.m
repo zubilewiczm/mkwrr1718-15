@@ -72,7 +72,7 @@ n    = 100000;
 u0 = struct('fun', pdf, 'supp', area);
 T  = 1;
 bb = [-4,4;-4,4];
-[u,x,y,t] = solve_st_nobd(u0,T,bb,0.1,0.01,n);
+[u,x,y,t] = solve_st(u0,[],T,bb,0.1,0.01,n,'None');
 anim_pdf(u,x,y,t,[0,0.05],10);
 
 %% Solution of diffusion equation -- Dirichlet boundary
@@ -83,7 +83,7 @@ u0 = struct('fun', pdf, 'supp', area);
 T  = 1;
 rg = @(x) all(abs(x)<1.5); % square [-1.5,1.5]^2
 bb = [-2,2;-2,2];
-[u,x,y,t] = solve_st_dirichlet(u0,rg,T,bb,0.1,0.01,n);
+[u,x,y,t] = solve_st(u0,rg,T,bb,0.1,0.01,n,'Dirichlet');
 anim_pdf(u,x,y,t,[0,0.05],10);
 
 %% Solution of diffusion equation -- Neumann boundary
@@ -93,5 +93,5 @@ n    = 100000;
 u0 = struct('fun', pdf, 'supp', area);
 T  = 1;
 bb = [-1,1;-1,1];
-[u,x,y,t] = solve_st_neumann(u0,T,bb,0.1,0.01,n);
+[u,x,y,t] = solve_st(u0,[],T,bb,0.1,0.01,n,'Neumann');
 anim_pdf(u,x,y,t,[0,0.05],10);
