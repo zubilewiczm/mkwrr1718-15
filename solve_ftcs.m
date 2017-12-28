@@ -1,8 +1,10 @@
 function [ u,t,x,y,N,m ] = solve_ftcs( h,lambda,u0,ts,xs,ys, boundary)
-%SOLVE_FTCS Solves 2D Fokker-Planck Equation (that is corelated with simple
-%diffusion equation without a drift) u_t=1/2*div(Du) with zero
-%Dirichlet/Neumann boundary condition using common 
+%SOLVE_FTCS Solves 2D diffusion equation  u_t=1/2*div(Du) with zero
+%Dirichlet/Neumann boundary conditions using common 
 %finite difference method called Forward-Time Central-Space.
+%Function itself is any improvement over FTCSDIFF.m. Spatial grid was
+%extended over h/2 step in both directions.This helps with providing  
+%better numerical approximations of boundary conditions.
 %   Args:
 %     h         Spatial Step.
 %     lambda    Constant that with given formula lambda=k/h describes 

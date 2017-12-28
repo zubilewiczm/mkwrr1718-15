@@ -1,6 +1,36 @@
 function [ u,t,x,y,N,m ] = solve_cn( h,lambda,u0,ts,xs,ys,boundary )
-%SOLVE_CN Summary of this function goes here
-%   Detailed explanation goes here
+%SOLVE_CN Solves 2D Diffusion equation withouth a drift: u_t=1/2*div(Du)   
+%with zero Dirichlet/Neumann boundary conditions, using Crank Nicolson
+%finite difference method. 
+%
+%Adnotation1: Because it is two dimensional equation, this
+%problem is solved by using an operator splitting method called  
+%ADI - Alternating direction implicit method
+%
+%Adnotation2: This function is an improvement over both functions
+%CrankNicolson0N and CrankNicolson0N. There are added additional spectral
+%points lying beyond our initial mesh, that helps finding second order
+%approximations of boundary conditions.
+%   Args:
+%     h         Spatial Step.
+%     lambda    Constant that with given formula lambda=k/h describes 
+%                 time step.
+%     u0        Initial condition.
+%     ts        A two-element vector representing the time interval.
+%     xs        A two-element vector representing the spatial interval  
+%                 on x-axis.
+%     ys        A two-element vector representing the spatial interval  
+%                 on y-axis.
+%     boundary  String, must be either 'Dirichlet' or 'Neumann' - depends 
+%                 on what boundary condition user wish to use. 
+%
+%   Output:
+%     u         Matrix m x l x N representing solution in point (x,y) 
+%                 at time t.
+%     t         Time mesh.
+%     x,y       Grid edges.
+%     N         Length of vector t.
+%     m         Length of vector x and y.
 
 k=lambda*h;
 x=xs(1)+h/2:h:xs(2)-h/2;
@@ -21,6 +51,7 @@ u(:,:,1)=u0(X,Y);
 a = -k/(2*h.^2);      ax = a.*ones(m,1); ay = a.*ones(l,1);
 b = 2*(1+k/(2*h.^2)); bx = b.*ones(m,1); by = b.*ones(l,1);
 c = a;                cx = c.*ones(m,1); cy = c.*ones(l,1);
+
 if strcmp(boundary, 'Dirichlet')
     Ax = [0,  1,  1;
           ax, bx, cx;
@@ -28,6 +59,7 @@ if strcmp(boundary, 'Dirichlet')
     Ay = [0,  1,  1;
           ay, by, cy;
            1, 1,  0];
+       
 elseif strcmp(boundary, 'Neumann')
     Ax = [0,  1, -1;
           ax, bx, cx;
@@ -82,4 +114,3 @@ for n=1:N-1
     u(:,:,n+1) = u_tmp(2:end-1,2:end-1);
 end
 end
-
