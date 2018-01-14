@@ -12,8 +12,8 @@ function [ xs, ts ] = brownian_bridge( xi, ti, h, sigma )
 %                 and positive-definite.
 %
 %   Returns:
-%     ts        Time mesh.
 %     xs        Positions of particle in time `ts`.
+%     ts        Time mesh.
 
 d = size(xi,1);
 if nargin < 4

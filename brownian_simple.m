@@ -10,8 +10,8 @@ function [ xs, ts ] = brownian_simple( x0, T, h, sigma )
 %                 and positive-definite.
 %
 %   Returns:
-%     ts        Time mesh.
 %     xs        Positions of particle in time `ts`.
+%     ts        Time mesh.
 
 d = length(x0);
 if nargin < 4
