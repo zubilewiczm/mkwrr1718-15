@@ -20,7 +20,7 @@ end
 
 expfps = tps*(N-1)/T;
 fps = min(expfps, maxfps);
-ind = round(1:expfps/fps:N);
+ind = [round(1:expfps/fps:N), N];
 
 end
 
