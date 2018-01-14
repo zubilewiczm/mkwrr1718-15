@@ -26,7 +26,7 @@ function [ u, x, y, t, P ] = solve_st( u0, bdr, T, area, h, k, n, boundary)
 %                                 rectangle bounded by `area`.
 %
 %   Returns:
-%     u         Tensor of approximate solutions. First two coordinates are
+%     u         Tensor of approximate solutions. First two indices are
 %                 spatial, while the last is temporal.
 %     x,y       Coordinates of spatial mesh nodes.
 %     t         Mesh of time discretization.
