@@ -14,10 +14,11 @@ pres_anim_nobd_tr(t_nbd_tr,P_nbd,area,0.1);
 
 figure(4);
 % pres_anim_sol(t_nbd, x_nbd, y_nbd, u_nbd, sol, area, 0.1);
-pres_anim_single(t_nbd, x_nbd, y_nbd, u_nbd, area, 0.1);
+pres_anim_single(t_nbd, x_nbd, y_nbd, u_nbd, area, 'Ruchy Browna', 0.1);
 
 figure(5);
-pres_anim_error(t_nbd(2:end), x_nbd, y_nbd, u_nbd, sol, area, 0.1);
+pres_anim_error(t_nbd(2:end), x_nbd, y_nbd, u_nbd, sol, area,...
+    'Błąd (RB-analityczne)', 0.1);
 
 %% Dirichlet
 figure(6);
@@ -39,7 +40,8 @@ figure(9);
 pres_anim_single(td_cn, xd, yd, ud_cn, [area_d;0,inf], 'Crank-Nicolson', 0.05);
 
 figure(10);
-pres_anim_error(td, xd, yd, ud, ud_cn(:,:,1:skip_1:end), area_d, 'Błąd', 0.05);
+pres_anim_error(td, xd, yd, ud, ud_cn(:,:,1:skip_1:end), area_d,...
+    'Błąd (RB - CN)', 0.05);
 
 %% Neumann
 figure(11);
@@ -57,4 +59,5 @@ figure(13);
 pres_anim_single(tn_cn, xn, yn, un_cn, area_n, 'Crank-Nicolson', 0.05);
 
 figure(14);
-pres_anim_error(tn, xn, yn, un, un_cn(:,:,1:skip_1:end), area_n, 'Błąd', 0.05);
+pres_anim_error(tn, xn, yn, un, un_cn(:,:,1:skip_1:end), area_n,...
+    'Błąd (RB - CN)', 0.05);
