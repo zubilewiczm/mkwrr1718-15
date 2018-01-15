@@ -57,12 +57,6 @@ if isscalar(h)
     h = [h,h];
 end
 
-if nargout < 5
-    batchsize = min(2^17,n);
-else
-    batchsize = n;
-end
-
 % Main loop
 t = 0:k:T;
 x = area(1,1):h(1):area(1,2);
@@ -72,6 +66,11 @@ y = movmean(y,2, 'Endpoints', 'discard');
 lt = length(t); lx = length(x); ly = length(y);
 u = zeros(lx, ly, lt);
 
+if nargout < 5
+    batchsize = min([ceil(2^23/length(t)), n]);
+else
+    batchsize = n;
+end
 n_left = n;
 
 while n_left > 0
