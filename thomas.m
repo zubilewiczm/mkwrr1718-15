@@ -13,7 +13,7 @@ function [ x ] = thomas( A, y )
     c = A(:,3);
     
     p(1) = -c(1)/b(1);
-    q(1) = y(1);
+    q(1) = y(1)/b(1);
     for i=2:n-1
         p(i) = -c(i)./(a(i).*p(i-1)+b(i));
         q(i) = (y(i) - a(i).*q(i-1))/(a(i).*p(i-1) + b(i));
